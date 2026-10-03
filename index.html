@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITZFIZZ — Velocity Scroll Animation | GSAP Motion Experience</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="High-performance scroll-driven hero animation recreating velocity-based kinetic UI with GSAP ScrollTrigger, sub-pixel interpolation, and GPU acceleration." />
+  <meta name="author" content="Yash Sonawane" />
+  <meta property="og:title" content="ITZFIZZ — Velocity Scroll Animation" />
+  <meta property="og:description" content="Smooth kinetic automotive scroll animation engineered with GSAP ScrollTrigger." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏎️</text></svg>" />
+
+  <!-- Google Fonts: Space Grotesk + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- GSAP & Plugins from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Background Canvas Effect -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <span class="brand-name">ITZFIZZ</span>
+        <span class="brand-tag">MOTION LAB</span>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Audio Engine Rev Toggle -->
+        <button id="audioToggle" class="btn-pill" aria-label="Toggle Engine Sound FX" title="Toggle Synthesized Engine Sound">
+          <span class="btn-icon" id="audioIcon">🔇</span>
+          <span class="btn-label" id="audioLabel">ENGINE FX: OFF</span>
+        </button>
+
+        <!-- Auto Cruise Button -->
+        <button id="autoDriveBtn" class="btn-pill btn-accent" aria-label="Auto cruise through the animation" title="Sit back and watch smooth auto-drive">
+          <span class="btn-icon">🚀</span>
+          <span class="btn-label" id="autoDriveText">AUTO DRIVE</span>
+        </button>
+
+        <!-- GitHub Repo Link -->
+        <a id="githubBtn" href="https://github.com/yash12991/itzfizz-scroll-animation" target="_blank" rel="noopener noreferrer" class="btn-pill btn-outline">
+          <svg class="gh-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span class="btn-label">GITHUB</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 1. HERO SECTION (Above the fold on initial load) -->
+  <!-- ============================================== -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-container">
+      
+      <!-- Category Badge -->
+      <div class="hero-badge" id="heroBadge">
+        <span class="badge-dot"></span>
+        <span>GSAP SCROLLTRIGGER ENGINE • 60 FPS GPU KINETICS</span>
+      </div>
+
+      <!-- Letter-Spaced Headline -->
+      <h1 class="hero-title" id="heroTitle" aria-label="WELCOME ITZFIZZ">
+        <span class="letter-wrap"><span class="letter">W</span></span>
+        <span class="letter-wrap"><span class="letter">E</span></span>
+        <span class="letter-wrap"><span class="letter">L</span></span>
+        <span class="letter-wrap"><span class="letter">C</span></span>
+        <span class="letter-wrap"><span class="letter">O</span></span>
+        <span class="letter-wrap"><span class="letter">M</span></span>
+        <span class="letter-wrap"><span class="letter">E</span></span>
+        <span class="letter-space">&nbsp;</span>
+        <span class="letter-wrap"><span class="letter accent-letter">I</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">T</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">Z</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">F</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">I</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">Z</span></span>
+        <span class="letter-wrap"><span class="letter accent-letter">Z</span></span>
+      </h1>
+
+      <!-- Subtitle Description -->
+      <p class="hero-subtitle" id="heroSubtitle">
+        Precision scroll-driven motion architecture. As you scroll, experience seamless vehicle telemetry, kinetic highway text illumination, and milestone data reveal.
+      </p>
+
+      <!-- Impact Metrics / Statistics (Animate in one by one) -->
+      <div class="stats-grid" id="statsGrid">
+        
+        <!-- Metric 1 -->
+        <div class="stat-card" data-target="58" id="statCard1">
+          <div class="stat-header">
+            <span class="stat-badge">METRIC 01</span>
+            <span class="stat-trend up">↑ 34%</span>
+          </div>
+          <div class="stat-value-row">
+            <span class="stat-number" data-value="58">0</span><span class="stat-symbol">%</span>
+          </div>
+          <p class="stat-desc">Increase in pick up point use</p>
+          <div class="stat-bar"><div class="stat-fill" style="--target-width: 58%;"></div></div>
+        </div>
+
+        <!-- Metric 2 -->
+        <div class="stat-card" data-target="23" id="statCard2">
+          <div class="stat-header">
+            <span class="stat-badge">METRIC 02</span>
+            <span class="stat-trend down">↓ 23%</span>
+          </div>
+          <div class="stat-value-row">
+            <span class="stat-number" data-value="23">0</span><span class="stat-symbol">%</span>
+          </div>
+          <p class="stat-desc">Decreased in customer phone calls</p>
+          <div class="stat-bar"><div class="stat-fill" style="--target-width: 23%;"></div></div>
+        </div>
+
+        <!-- Metric 3 -->
+        <div class="stat-card" data-target="27" id="statCard3">
+          <div class="stat-header">
+            <span class="stat-badge">METRIC 03</span>
+            <span class="stat-trend up">↑ 27%</span>
+          </div>
+          <div class="stat-value-row">
+            <span class="stat-number" data-value="27">0</span><span class="stat-symbol">%</span>
+          </div>
+          <p class="stat-desc">Increase in customer retention</p>
+          <div class="stat-bar"><div class="stat-fill" style="--target-width: 27%;"></div></div>
+        </div>
+
+        <!-- Metric 4 -->
+        <div class="stat-card" data-target="40" id="statCard4">
+          <div class="stat-header">
+            <span class="stat-badge">METRIC 04</span>
+            <span class="stat-trend down">↓ 40%</span>
+          </div>
+          <div class="stat-value-row">
+            <span class="stat-number" data-value="40">0</span><span class="stat-symbol">%</span>
+          </div>
+          <p class="stat-desc">Reduction in order fulfillment lag</p>
+          <div class="stat-bar"><div class="stat-fill" style="--target-width: 40%;"></div></div>
+        </div>
+
+      </div>
+
+      <!-- Scroll Invitation Indicator -->
+      <div class="scroll-prompt" id="scrollPrompt">
+        <span class="prompt-text">SCROLL DOWN TO ACCELERATE</span>
+        <div class="mouse-icon">
+          <div class="mouse-wheel"></div>
+        </div>
+        <div class="chevron-pulse">⌄</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 2. PINNED HIGHWAY TRACK SCROLL EXPERIENCE       -->
+  <!-- ============================================== -->
+  <section class="scroll-track-section" id="trackSection">
+    <div class="pinned-track-container" id="pinnedTrack">
+      
+      <!-- Highway Atmosphere / Speed lines -->
+      <div class="speed-lines" id="speedLines" aria-hidden="true"></div>
+
+      <!-- Floating Milestone Callout Cards (Revealed along scroll journey) -->
+      <div class="milestone-card milestone-top" id="box1">
+        <div class="milestone-badge" style="background: #def54f; color: #111;">MILESTONE A</div>
+        <div class="milestone-stat"><span class="highlight-val">58%</span> Increase</div>
+        <div class="milestone-info">in automated pick up point use across active transit hubs</div>
+        <div class="milestone-radar-line"></div>
+      </div>
+
+      <div class="milestone-card milestone-bottom" id="box2">
+        <div class="milestone-badge" style="background: #6ac9ff; color: #111;">MILESTONE B</div>
+        <div class="milestone-stat"><span class="highlight-val">23%</span> Decrease</div>
+        <div class="milestone-info">in inbound customer phone calls through proactive telemetry</div>
+        <div class="milestone-radar-line"></div>
+      </div>
+
+      <div class="milestone-card milestone-top" id="box3">
+        <div class="milestone-badge" style="background: #c084fc; color: #111;">MILESTONE C</div>
+        <div class="milestone-stat"><span class="highlight-val">27%</span> Boost</div>
+        <div class="milestone-info">in recurring engagement with zero-latency interface response</div>
+        <div class="milestone-radar-line"></div>
+      </div>
+
+      <div class="milestone-card milestone-bottom" id="box4">
+        <div class="milestone-badge" style="background: #fa7328; color: #111;">MILESTONE D</div>
+        <div class="milestone-stat"><span class="highlight-val">40%</span> Gain</div>
+        <div class="milestone-info">in overall logistics pipeline throughput and velocity</div>
+        <div class="milestone-radar-line"></div>
+      </div>
+
+      <!-- The Grand Highway Road -->
+      <div class="road-wrapper">
+        <!-- Shoulder guard lines -->
+        <div class="road-shoulder road-shoulder-top"></div>
+        
+        <div class="road" id="road">
+          <!-- Asphalt Grid & Lane Markings -->
+          <div class="road-surface"></div>
+          <div class="lane-divider top-lane"></div>
+          <div class="lane-divider center-lane"></div>
+          <div class="lane-divider bottom-lane"></div>
+
+          <!-- Kinetic Letter-Spaced Highway Headline (Reveals as car drives over) -->
+          <div class="road-typography" id="roadTypography" aria-hidden="true">
+            <span class="track-letter" data-index="0">W</span>
+            <span class="track-letter" data-index="1">E</span>
+            <span class="track-letter" data-index="2">L</span>
+            <span class="track-letter" data-index="3">C</span>
+            <span class="track-letter" data-index="4">O</span>
+            <span class="track-letter" data-index="5">M</span>
+            <span class="track-letter" data-index="6">E</span>
+            <span class="track-space">&nbsp;</span>
+            <span class="track-letter" data-index="7">I</span>
+            <span class="track-letter" data-index="8">T</span>
+            <span class="track-letter" data-index="9">Z</span>
+            <span class="track-letter" data-index="10">F</span>
+            <span class="track-letter" data-index="11">I</span>
+            <span class="track-letter" data-index="12">Z</span>
+            <span class="track-letter" data-index="13">Z</span>
+          </div>
+
+          <!-- Nitro/Tire Dynamic Trail behind the car -->
+          <div class="car-trail" id="carTrail">
+            <div class="trail-glow-head"></div>
+          </div>
+
+          <!-- The Vehicle (McLaren 720S Top-View) -->
+          <div class="car-container" id="carContainer">
+            <!-- Dynamic Headlight Projection Beam -->
+            <div class="headlight-beam" id="headlightBeam"></div>
+            
+            <!-- Underglow & Shadow -->
+            <div class="car-shadow"></div>
+            <div class="car-underglow"></div>
+
+            <!-- Car PNG Image -->
+            <img src="assets/images/car.png" alt="McLaren 720S Sports Car" class="car-img" id="car" />
+          </div>
+
+        </div>
+
+        <div class="road-shoulder road-shoulder-bottom"></div>
+      </div>
+
+      <!-- Realtime Cockpit Telemetry HUD -->
+      <div class="telemetry-hud" id="telemetryHud">
+        <!-- Speedometer Section -->
+        <div class="hud-item speed-meter">
+          <div class="hud-label">VELOCITY</div>
+          <div class="hud-val-group">
+            <span class="hud-big-num" id="speedDisplay">0</span>
+            <span class="hud-unit">KM/H</span>
+          </div>
+          <div class="speed-bar-wrap">
+            <div class="speed-bar-fill" id="speedBarFill"></div>
+          </div>
+        </div>
+
+        <!-- Gear readout -->
+        <div class="hud-item gear-box">
+          <div class="hud-label">GEAR</div>
+          <div class="gear-val" id="gearDisplay">N</div>
+        </div>
+
+        <!-- Scroll Distance / Progress -->
+        <div class="hud-item progress-box">
+          <div class="hud-label">TRACK COMPLETION</div>
+          <div class="hud-val-group">
+            <span class="hud-big-num" id="progressDisplay">0</span>
+            <span class="hud-unit">%</span>
+          </div>
+          <div class="distance-sub" id="distanceDisplay">0 / 1200 M</div>
+        </div>
+
+        <!-- Quick Scrub Slider for Interactive Testing -->
+        <div class="hud-item slider-box">
+          <div class="hud-label">MANUAL SCRUB</div>
+          <input type="range" id="manualScrub" min="0" max="100" value="0" step="0.1" aria-label="Manual scroll animation scrubber" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 3. ARCHITECTURE & PERFORMANCE DETAILS SECTION  -->
+  <!-- ============================================== -->
+  <section class="details-section" id="detailsSection">
+    <div class="details-container">
+      
+      <div class="section-heading">
+        <span class="sub-tag">PERFORMANCE BLUEPRINT</span>
+        <h2>Engineered for 60+ FPS Motion Fidelity</h2>
+        <p>Built strictly according to motion performance guidelines: transform-only composite layers, sub-pixel velocity interpolation, and zero layout thrashing.</p>
+      </div>
+
+      <div class="features-grid">
+        
+        <div class="feature-card">
+          <div class="feature-icon">🏎️</div>
+          <h3>ScrollTrigger Scrubbing</h3>
+          <p>Interpolated scrub smoothing (momentum damping: 1.2s) ensures natural physical inertia as the car accelerates and stops gracefully.</p>
+          <div class="feature-tag">GSAP 3 + ScrollTrigger</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Zero Layout Reflows</h3>
+          <p>Every dynamic property utilizes hardware-accelerated <code>transform: translate3d()</code> and <code>opacity</code> with <code>will-change</code> composite layers.</p>
+          <div class="feature-tag">Composite Thread Only</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Velocity Telemetry</h3>
+          <p>Real-time delta scroll calculation converts instantaneous scrolling momentum into realistic KM/H velocity, gear shifts, and headlight intensity.</p>
+          <div class="feature-tag">Realtime Math Engine</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Dynamic Viewport Recalculation</h3>
+          <p>Smart debounced resize observers recalculate track distances, letter bounding boxes, and car offsets on window resizing.</p>
+          <div class="feature-tag">Adaptive Breakpoints</div>
+        </div>
+
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="cta-box">
+        <div class="cta-content">
+          <h3>Ready to drive your digital interfaces?</h3>
+          <p>Explore the complete source code or clone the repository for your own projects.</p>
+        </div>
+        <div class="cta-buttons">
+          <button class="btn-pill btn-accent" id="restartTripBtn">
+            <span>↺ RESTART JOURNEY</span>
+          </button>
+          <a href="https://github.com/yash12991/itzfizz-scroll-animation" target="_blank" rel="noopener noreferrer" class="btn-pill btn-outline">
+            <span>VIEW ON GITHUB</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-logo">⚡ ITZFIZZ</span>
+        <span class="footer-text">Frontend Engineering & Motion Design Assignment</span>
+      </div>
+      <div class="footer-right">
+        <span>Created with GSAP 3 & Vanilla Web Tech</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="js/main.js"></script>
+</body>
+</html>
